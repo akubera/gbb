@@ -1,0 +1,5 @@
+#!/usr/bin/env php
+<?php
+
+echo "Setting up Git-Based-Blog\n";
+
