@@ -3,3 +3,34 @@
 
 echo "Setting up Git-Based-Blog\n";
 
+$exec_name = array_shift($argv);
+
+function setup_configuration_file()
+{
+
+  if (file_exists("config.php")) {
+    print "File config.php already exists. Overwrite? ";
+
+  } else {
+    $str = read("config.php.default");
+    echo "{$str}\n\n";
+  }
+  echo " Creatingsetup_configuration_file]\n";
+}
+
+function install_git_hooks()
+{
+  if (!file_exists('.git')) {
+    printf(stderr, "Error: This appears to not be a git repository, please 'git init'\n");
+    exit(1);
+  }
+  print "Installing git hooks\n";
+  file_put_contents(".git/hooks/post_update", file_get_contents("git_hooks/post_update"));
+}
+
+if (count($argv) === 0) {
+  setup_configuration_file();
+} else {
+  var_dump($argv);
+}
+

@@ -1,0 +1,6 @@
+#!/usr/bin/env php
+<?php
+
+echo "Running post-update git hook\n";
+
+$exec_name = array_shift($argv);
