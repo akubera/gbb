@@ -5,17 +5,19 @@ echo "Setting up Git-Based-Blog\n";
 
 $exec_name = array_shift($argv);
 
+function file_copy($src, $dest)
+{
+  file_put_contents($dest, file_get_contents($src));
+}
+
 function setup_configuration_file()
 {
-
   if (file_exists("config.php")) {
     print "File config.php already exists. Overwrite? ";
-
   } else {
-    $str = file_get_contents("config.php.default");
-    echo "{$str}\n\n";
+    echo " Creating configuration file\n";
+    file_copy("config.php.default", "config.php");
   }
-  echo " Creatingsetup_configuration_file]\n";
 }
 
 function install_git_hooks()
@@ -25,11 +27,12 @@ function install_git_hooks()
     exit(1);
   }
   print "Installing git hooks\n";
-  file_put_contents(".git/hooks/post_update", file_get_contents("git_hooks/post_update"));
+  file_copy("git_hooks/post_update", ".git/hooks/post_update");
 }
 
 if (count($argv) === 0) {
   setup_configuration_file();
+  install_git_hooks();
 } else {
   var_dump($argv);
 }
