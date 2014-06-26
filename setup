@@ -1,6 +1,11 @@
 #!/usr/bin/env php
 <?php
 
+if (php_sapi_name() !== 'cli') {
+  echo "This script MUST be run from the command line.\n";
+  exit();
+}
+
 echo "Setting up Git-Based-Blog\n";
 
 $exec_name = array_shift($argv);
@@ -30,9 +35,32 @@ function install_git_hooks()
   file_copy("git_hooks/post_update", ".git/hooks/post_update");
 }
 
+function install_twig_extension()
+{
+  if (file_exists("lib/twig")) {
+    print "Twig appears to exist. Continue? ";
+    for (;;) {
+      $line = strtolower(trim(fgets(STDIN)));
+      if ($line === 'yes' || $line === 'y') {
+        break;
+      }
+      else if ($line === 'no' || $line === 'n') {
+        return;
+      }
+      print "Unknown response. Continue installing twig? ";
+    }
+  }
+  print "Installing twig.";
+  `cd lib && curl https://codeload.github.com/fabpot/Twig/tar.gz/v1.15.1 | tar x && mv Twig-1.15.1/lib/Twig twig && rm -rf Twig-1.15.1`;
+  print "Finished.";
+}
+
 if (count($argv) === 0) {
   setup_configuration_file();
   install_git_hooks();
+}
+else if ($argv[0] === "--twig") {
+  install_twig_extension();
 } else {
   var_dump($argv);
 }

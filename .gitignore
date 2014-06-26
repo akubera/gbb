@@ -1,3 +1,8 @@
 
+!*.keep
+lib
 *.DS_Store
+
+config.php
+*.db
 

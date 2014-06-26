@@ -2,10 +2,12 @@
 <html lang='en'>
 <head>
   <meta charset='utf-8'>
-  <?php //{% block head %} ?>
-  <title><?= $html_title ?></title>
+  <title>{{html_title}}</title>
+  {% block head %}{% endblock %}
+
 </head>
 <body>
-  <?php //{% block body %} ?>
+  {% block body %}{% endblock %}
+
 </body>
 </html>
